@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class BhagwatGeetaProvider extends ChangeNotifier {
+
+
   List<BhagwatGeeta> bhagwatgitaList = [];
   int selectedindex=0;
   int slokindex=0;
@@ -15,6 +17,7 @@ class BhagwatGeetaProvider extends ChangeNotifier {
   String explanation='';
 
   Future<void> fetcData() async {
+
     String data = await rootBundle.loadString('assets/jsonData/jsondata.json');
     List gita = jsonDecode(data);
     bhagwatgitaList = gita
