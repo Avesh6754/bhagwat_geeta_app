@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bhagwat_geeta_app/views/home/homeScreen.dart';
 import 'package:flutter/material.dart';
 
 class Splashscreen extends StatelessWidget {
@@ -7,9 +8,9 @@ class Splashscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer.periodic(Duration(seconds: 3),(timer) {
-      Navigator.of(context).pushReplacementNamed('/home');
-    },);
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Homescreen(),));
+    });
     return Scaffold(
       body:Stack(
         children: [

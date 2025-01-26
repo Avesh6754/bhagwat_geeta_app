@@ -18,28 +18,40 @@ class Sloklist extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color(0xff401A03),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color:Theme.of(context).colorScheme.secondary,
             )),
         title: Text(
           'स्लोक',
           style: TextStyle(
-              color: Colors.white,
+              color:Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.w600,
               letterSpacing: 1),
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                (providertrue.isDark)
+                    ? IconButton(
+                    onPressed: () {
+                      providerfalse.setTheme();
+                    },
+                    icon: Icon(Icons.light_mode))
+                    : IconButton(
+                    onPressed: () {
+                      providerfalse.setTheme();
+                    },
+                    icon: Icon(Icons.dark_mode));
+              },
               icon: Icon(
                 Icons.sunny,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.secondary,
               ))
         ],
       ),
@@ -58,7 +70,7 @@ class Sloklist extends StatelessWidget {
             itemCount: providertrue.bhagwatgitaList[providertrue.selectedindex].verseeList.length,
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
-                providerfalse.indexChange(index, index);
+                providerfalse.slokeIndexChange(index);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -70,26 +82,24 @@ class Sloklist extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color:Color(0xff534133).withOpacity(0.7),
+                    color:Theme.of(context).colorScheme.primary,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CircleAvatar(
-                              radius: 5,
-                              backgroundColor: Colors.white,
-                            ),
+                      SizedBox(width: 10,),
+                          CircleAvatar(
+                            radius: 5,
+                            backgroundColor:Theme.of(context).colorScheme.secondary,
                           ),
-                           SizedBox(width: 5,),
                            Column(
                              children: [
+                               SizedBox(height: 10,),
                                Text(
                                 'श्लोक ${providertrue.bhagwatgitaList[providertrue.selectedindex].verseeList[index].versesNumber}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.white,
+                                    color: Theme.of(context).colorScheme.secondary,
                                     fontSize: 20,
                                     letterSpacing: 1),
                                                          ),
@@ -98,10 +108,10 @@ class Sloklist extends StatelessWidget {
                                  child: Padding(
                                    padding: const EdgeInsets.all(8.0),
                                    child: Text(
-                                     '${providertrue.bhagwatgitaList[providertrue.selectedindex].verseeList[index].text.sanskrit}',
+                                     maxLines: 2,'${providertrue.bhagwatgitaList[providertrue.selectedindex].verseeList[index].text.hindi}',
                                      style: TextStyle(
                                          fontWeight: FontWeight.w500,
-                                         color: Colors.white,
+                                         color: Theme.of(context).colorScheme.secondary,
                                          fontSize: 15,
                                          letterSpacing: 1),
                                    ),
@@ -109,14 +119,12 @@ class Sloklist extends StatelessWidget {
                                ),
                              ],
                            ),
-                      SizedBox(width: 5,),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          radius: 5,
-                          backgroundColor: Colors.white,
-                        ),
+
+                      CircleAvatar(
+                        radius: 5,
+                        backgroundColor:Theme.of(context).colorScheme.secondary,
                       ),
+                      SizedBox(width: 10,),
 
                     ],
                   ),

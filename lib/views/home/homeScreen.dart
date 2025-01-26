@@ -16,25 +16,30 @@ class Homescreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color(0xff401A03),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         leading: Icon(
           Icons.menu,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
         ),
         title: Text(
           '${language[0]}',
           style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.w600,
               letterSpacing: 1),
         ),
         actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.sunny,
-                color: Colors.white,
-              ))
+          (providertrue.isDark)
+              ? IconButton(
+              onPressed: () {
+                providerfalse.setTheme();
+              },
+              icon: Icon(Icons.light_mode))
+              : IconButton(
+              onPressed: () {
+                providerfalse.setTheme();
+              },
+              icon: Icon(Icons.dark_mode))
         ],
       ),
       body: Stack(
@@ -52,7 +57,7 @@ class Homescreen extends StatelessWidget {
             itemCount: providertrue.bhagwatgitaList.length,
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
-                providertrue.selectedindex=index;
+                providerfalse.chapterIndex(index);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -62,7 +67,7 @@ class Homescreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(right: 10, left: 10, top: 10),
                 child: Card(
-                  color: Color(0xff534133).withOpacity(0.8),
+                  color:  Theme.of(context).colorScheme.primary,
                   child: ListTile(
                       leading: Container(
                         decoration: BoxDecoration(
@@ -70,24 +75,24 @@ class Homescreen extends StatelessWidget {
                             border: Border.all(
                                 strokeAlign: BorderSide.strokeAlignOutside,
                                 width: 1.8,
-                                color: Colors.amber.shade600)),
+                                color: Theme.of(context).colorScheme.secondary,)),
                         child: CircleAvatar(
                           backgroundImage: AssetImage(image[index]),
                           backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
+                              Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                       title: Text(
-                        '${providertrue.bhagwatgitaList[index].chapterName.sanskrit}',
+                        maxLines: 1,'${providertrue.bhagwatgitaList[index].chapterName.hindi}',
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                            color:Theme.of(context).colorScheme.secondary,
                             fontSize: 20,
                             letterSpacing: 1),
                       ),
                       subtitle: Text(
                         'कुल : ${providertrue.bhagwatgitaList[index].verseeList.length} श्लोक',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Theme.of(context).colorScheme.secondary,),
                       ),
                       trailing: Container(
                         height: 70,

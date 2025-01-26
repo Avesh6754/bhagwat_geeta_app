@@ -1,23 +1,27 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bhagwat_geeta_app/modal/modalclass.dart';
 import 'package:bhagwat_geeta_app/utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BhagwatGeetaProvider extends ChangeNotifier {
-
-
   List<BhagwatGeeta> bhagwatgitaList = [];
-  int selectedindex=0;
-  int slokindex=0;
-  int imageindex=0;
-  List<BhagwatGeeta> bhagwatSaveList=[];
-  String explanation='';
+
+  List<Verses> get saveList =>favoritesVerses;
+  int selectedindex = 0;
+  int slokindex = 0;
+  int imageindex = 0;
+
+  late SharedPreferences sharedPreferences;
+  List<Verses> favoritesVerses = [];
+  bool isDark = true;
+  String currentLanguage = 'hindi';
 
   Future<void> fetcData() async {
-
     String data = await rootBundle.loadString('assets/jsonData/jsondata.json');
     List gita = jsonDecode(data);
     bhagwatgitaList = gita
@@ -25,45 +29,122 @@ class BhagwatGeetaProvider extends ChangeNotifier {
           (e) => BhagwatGeeta.fromJson(e),
         )
         .toList();
+
     notifyListeners();
   }
-  void selectedChapter()
-  {
 
+  Future<void> setCloseTheme(bool isDark) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool('show', isDark);
   }
-  void indexChange(int index,indeximage)
-  {
-    slokindex=index;
-    if(indeximage>image.length)
-      {
-        indeximage=0;
-        notifyListeners();
-      }
-    else
-    {
-      imageindex=indeximage;
-      notifyListeners();
+
+  Future<void> getCloseTheme() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    isDark = sharedPreferences.getBool('show') ?? false;
+  }
+
+  void setTheme() {
+    isDark = !isDark;
+    setCloseTheme(isDark);
+    notifyListeners();
+  }
+
+  void languageTranslate(String language) {
+    currentLanguage = language;
+    notifyListeners();
+  }
+
+  void chapterIndex(int chapter) {
+    selectedindex = chapter;
+    notifyListeners();
+  }
+
+  String getTranslation(int index) {
+    var verse = bhagwatgitaList[selectedindex].verseeList[index].text;
+    if (currentLanguage == 'hindi') {
+      return verse.hindi;
+    } else if (currentLanguage == 'english') {
+      return verse.english;
+    } else if (currentLanguage == 'gujarati') {
+      return verse.gujarati;
     }
-    notifyListeners();
-
+    return verse.sanskrit; // Default to Hindi
   }
-  BhagwatGeetaProvider()
-  {
+  String translate(Verses verse) {
+
+    if (currentLanguage == 'hindi') {
+      return verse.text.hindi;
+    } else if (currentLanguage == 'english') {
+      return verse.text.english;
+    } else if (currentLanguage == 'gujarati') {
+      return verse.text.gujarati;
+    }
+    return verse.text.sanskrit; // Default to Hindi
+  }
+
+  void slokeIndexChange(int index) {
+    slokindex = index;
+    notifyListeners();
+  }
+
+  void imageSetting(int index) {
+    imageindex = index;
+    notifyListeners();
+  }
+
+  BhagwatGeetaProvider() {
     fetcData();
-  }
-  void updateLanguage(item,BhagwatGeetaProvider gitaJsonProvider, slokindex) {
-    if (item == 1) {
-      explanation = gitaJsonProvider.bhagwatgitaList[selectedindex].verseeList[slokindex].text.sanskrit;
-      notifyListeners();
-    } else if (item == 2) {
-      explanation = gitaJsonProvider
-          .gitaList[selectedindex].verses[slokindex].shlokas.english;
-      notifyListeners();
-    } else if (item == 3) {
-      explanation = gitaJsonProvider
-          .gitaList[selectedindex].verses[slokindex].shlokas.gujarati;
-      notifyListeners();
-    }
+    getCloseTheme();
   }
 
+  void toggleMethod(Verses verse) {
+    verse.isFavourite = !verse.isFavourite;
+    print(verse.isFavourite);
+    if (verse.isFavourite == true) {
+      favoritesVerses.add(verse);
+
+      saveGeetaList(favoritesVerses);
+
+      notifyListeners();
+    } else {
+      favoritesVerses.remove(verse);
+      saveGeetaList(favoritesVerses);
+
+      notifyListeners();
+    }
+    notifyListeners();
+  }
+
+  Future<void> convertIntoStringAndSaveData(
+      List<Verses> favoritesVerses) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final jsonList = favoritesVerses
+        .map(
+          (e) => jsonEncode(e.toJson()),
+        )
+        .toList();
+    await prefs.setStringList('fav', jsonList);
+  }
+
+  Future<List<Verses>> loadItems() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final jsonList = prefs.getStringList('fav') ?? [];
+    return jsonList.map((json) => Verses.fromJson(jsonDecode(json))).toList();
+  }
+
+  Future<void> fetchSaveData() async {
+    favoritesVerses = await loadItems();
+    notifyListeners();
+  }
+
+  Future<void> saveGeetaList(List<Verses> saveList) async {
+    favoritesVerses = saveList;
+    await convertIntoStringAndSaveData(saveList);
+    notifyListeners();
+  }
+
+  void removeFromList(int index) {
+    saveList.removeAt(index);
+    notifyListeners();
+  }
 }
