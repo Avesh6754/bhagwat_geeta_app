@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.bhagwat_geeta_app"
+    namespace  = "com.example.bhagwat_geeta_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

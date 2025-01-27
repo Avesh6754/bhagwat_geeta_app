@@ -1,8 +1,13 @@
+import 'dart:developer';
+import 'dart:ui';
+
 import 'package:bhagwat_geeta_app/utils/global.dart';
 import 'package:bhagwat_geeta_app/views/favouritePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+
 
 import '../../provider/bhagwatgeetaProvider.dart';
 
@@ -17,7 +22,6 @@ class Slokdetail extends StatelessWidget {
     BhagwatGeetaProvider providerfalse =
         Provider.of<BhagwatGeetaProvider>(context, listen: false);
     double height = MediaQuery.of(context).size.height;
-
 
     PageController pageController =
         PageController(initialPage: providertrue.slokindex);
@@ -101,7 +105,7 @@ class Slokdetail extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
                     image: AssetImage('assets/image/bg.jpg'))),
@@ -146,7 +150,9 @@ class Slokdetail extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.secondary),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 20),
@@ -155,14 +161,30 @@ class Slokdetail extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
-                                  color: Theme.of(context).colorScheme.secondary,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 20),
-                              IconButton.filled(onPressed: ()  {
-                                providerfalse.toggleMethod(verse);
-                              }, icon: (verse.isFavourite==true)?Icon(Icons.favorite,color: Theme.of(context).colorScheme.secondary,):Icon(Icons.favorite_border,color: Theme.of(context).colorScheme.secondary,),)
+                              IconButton.filled(
+                                onPressed: () {
+                                  providerfalse.toggleMethod(verse);
+                                },
+                                icon: (verse.isFavourite == true)
+                                    ? Icon(
+                                        Icons.favorite,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                      )
+                                    : Icon(
+                                        Icons.favorite_border,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                      ),
+                              )
                             ],
                           ),
                         ),
@@ -196,7 +218,6 @@ class Slokdetail extends StatelessWidget {
                             color: Theme.of(context).colorScheme.secondary,
                           )),
                     ),
-
                     ElevatedButton(
                       onPressed: () {
                         if (providertrue.slokindex <
@@ -226,10 +247,10 @@ class Slokdetail extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               )
             ],

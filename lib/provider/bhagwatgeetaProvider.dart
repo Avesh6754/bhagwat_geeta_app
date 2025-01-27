@@ -4,8 +4,10 @@ import 'dart:developer';
 import 'package:bhagwat_geeta_app/modal/modalclass.dart';
 import 'package:bhagwat_geeta_app/utils/global.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BhagwatGeetaProvider extends ChangeNotifier {
@@ -146,7 +148,6 @@ void showSholk(Verses verse)
     await convertIntoStringAndSaveData(saveList);
     notifyListeners();
   }
-
   void removeFromList(int index) {
     saveList.removeAt(index);
     notifyListeners();
