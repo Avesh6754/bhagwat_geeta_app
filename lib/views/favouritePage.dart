@@ -104,12 +104,12 @@ class Favouritepage extends StatelessWidget {
                   color:Theme.of(context)
                     .colorScheme
                     .primary
-                    .withOpacity(0.6),
+                    .withOpacity(0.7),
                   child: ListTile(
-                    title:Text(maxLines: (providertrue.saveList[index].showAll==true)?null:3,providerfalse.translate(providertrue.saveList[index])),
-                    trailing:IconButton(onPressed: () {
+                    title:Text(maxLines: (providertrue.saveList[index].showAll==true)?null:3,providerfalse.translate(providertrue.saveList[index],),style: TextStyle(color: Theme.of(context).colorScheme.secondary,),),
+                    trailing:IconButton.filled(onPressed: () {
                       providerfalse.removeFromList(index);
-                    }, icon: Icon(Icons.favorite)),
+                    }, icon: Icon(Icons.favorite,color: Theme.of(context).colorScheme.secondary,)),
                   ),
                 ),
               ),

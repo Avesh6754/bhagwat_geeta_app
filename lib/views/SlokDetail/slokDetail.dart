@@ -162,7 +162,7 @@ class Slokdetail extends StatelessWidget {
                               const SizedBox(height: 20),
                               IconButton.filled(onPressed: ()  {
                                 providerfalse.toggleMethod(verse);
-                              }, icon: (verse.isFavourite==true)?Icon(Icons.favorite):Icon(Icons.favorite_border))
+                              }, icon: (verse.isFavourite==true)?Icon(Icons.favorite,color: Theme.of(context).colorScheme.secondary,):Icon(Icons.favorite_border,color: Theme.of(context).colorScheme.secondary,),)
                             ],
                           ),
                         ),
