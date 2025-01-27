@@ -34,26 +34,26 @@ class Sloklist extends StatelessWidget {
               fontWeight: FontWeight.w600,
               letterSpacing: 1),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                (providertrue.isDark)
-                    ? IconButton(
-                    onPressed: () {
-                      providerfalse.setTheme();
-                    },
-                    icon: Icon(Icons.light_mode))
-                    : IconButton(
-                    onPressed: () {
-                      providerfalse.setTheme();
-                    },
-                    icon: Icon(Icons.dark_mode));
-              },
-              icon: Icon(
-                Icons.sunny,
-                color: Theme.of(context).colorScheme.secondary,
-              ))
-        ],
+        // actions: [
+        //   IconButton(
+        //       onPressed: () {
+        //         (providertrue.isDark)
+        //             ? IconButton(
+        //             onPressed: () {
+        //               providerfalse.setTheme();
+        //             },
+        //             icon: Icon(Icons.light_mode))
+        //             : IconButton(
+        //             onPressed: () {
+        //               providerfalse.setTheme();
+        //             },
+        //             icon: Icon(Icons.dark_mode));
+        //       },
+        //       icon: Icon(
+        //         Icons.sunny,
+        //         color: Theme.of(context).colorScheme.secondary,
+        //       ))
+        // ],
       ),
       body: Stack(
         children: [

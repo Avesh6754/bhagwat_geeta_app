@@ -58,12 +58,13 @@ class Verses {
   late var versesNumber;
   late Text text;
   late bool isFavourite;
+  late bool showAll=false;
 
   Verses({required this.text, required this.versesNumber,required this.isFavourite,});
 
   factory Verses.fromJson(Map m1) {
     return Verses(
-        text: Text.fromJson(m1['Text']), versesNumber: m1['VerseNumber'],isFavourite: false);
+        text: Text.fromJson(m1['Text']), versesNumber: m1['VerseNumber'],isFavourite: false,);
   }
 
   Map<String, dynamic> toJson() {

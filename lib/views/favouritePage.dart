@@ -95,21 +95,22 @@ class Favouritepage extends StatelessWidget {
           ),
           ListView.builder(itemCount: providertrue.saveList.length,itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.all(10),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context)
-                      .colorScheme
-                      .primary
-                      .withOpacity(0.6),
-                ),
-                child: ListTile(
-                  leading: CircleAvatar(child:Text(providertrue.saveList[index].versesNumber.toString()) ,),
-                  title:Text(providerfalse.translate(providertrue.saveList[index])),
-                  trailing:IconButton(onPressed: () {
-                    providerfalse.removeFromList(index);
-                  }, icon: Icon(Icons.favorite)),
+              padding: const EdgeInsets.all(4),
+              child: GestureDetector(
+                onTap: () {
+                  providerfalse.showSholk(providertrue.saveList[index]);
+                },
+                child: Card(
+                  color:Theme.of(context)
+                    .colorScheme
+                    .primary
+                    .withOpacity(0.6),
+                  child: ListTile(
+                    title:Text(maxLines: (providertrue.saveList[index].showAll==true)?null:3,providerfalse.translate(providertrue.saveList[index])),
+                    trailing:IconButton(onPressed: () {
+                      providerfalse.removeFromList(index);
+                    }, icon: Icon(Icons.favorite)),
+                  ),
                 ),
               ),
             );

@@ -32,7 +32,11 @@ class BhagwatGeetaProvider extends ChangeNotifier {
 
     notifyListeners();
   }
-
+void showSholk(Verses verse)
+{
+  verse.showAll=!verse.showAll;
+  notifyListeners();
+}
   Future<void> setCloseTheme(bool isDark) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setBool('show', isDark);

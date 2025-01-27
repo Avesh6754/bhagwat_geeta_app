@@ -160,9 +160,9 @@ class Slokdetail extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 20),
-                              IconButton(onPressed: ()  {
+                              IconButton.filled(onPressed: ()  {
                                 providerfalse.toggleMethod(verse);
-                              }, icon: Icon(Icons.favorite))
+                              }, icon: (verse.isFavourite==true)?Icon(Icons.favorite):Icon(Icons.favorite_border))
                             ],
                           ),
                         ),
